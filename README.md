@@ -42,6 +42,12 @@ Following are the endpoints that should be implemented:
 
 The query endpoint **MUST** return all configs that satisfy the query argument.
 
+#### Schema
+
+- **Config**
+  - Name (string)
+  - Data (key:value pairs)
+
 ### Configuration
 
 Your application **MUST** serve the API on the port defined by the environment variable `SERVE_PORT`.
@@ -50,14 +56,7 @@ The application **MUST** fail if the environment variable is not defined.
 ### Deployment
 
 The application **MUST** be deployable on a kubernetes cluster. Please provide manifest files and a script that deploys the application on a minikube cluster.
-
 The application **MUST** be accesible from outside the minikube cluster on `PORT=<SERVE_PORT>`
-
-#### Schema
-
-- **Config**
-  - Name (string)
-  - Data (key:value pairs)
 
 ## Rules
 
