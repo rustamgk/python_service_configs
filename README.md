@@ -38,17 +38,83 @@ Following are the endpoints that should be implemented:
 | Get    | `GET`       | `/configs/{name}`
 | Update | `PUT/PATCH` | `/configs/{name}`
 | Delete | `DELETE`    | `/configs/{name}`
-| Query  | `GET`       | `/search?name={config_name}&data.{key}={value}`
+| Query  | `GET`       | `/search?metadata.key=value`
 
 #### Query
 
 The query endpoint **MUST** return all configs that satisfy the query argument.
 
+Query example-1:
+
+```sh
+curl http://config-service/search?metadata.monitoring.enabled=true
+```
+
+Response example:
+
+```json
+[
+  {
+    "name": "datacenter-1",
+    "metadata": {
+      "monitoring": {
+        "enabled": true
+      }
+      "limits": {
+        "cpu": {
+          "enabled": false
+        }
+      }
+    }
+  },
+  {
+    "name": "datacenter-2",
+    "metadata": {
+      "monitoring": {
+        "enabled": true
+      }
+      "limits": {
+        "cpu": {
+          "enabled": true
+        }
+      }
+    }
+  },
+]
+```
+
+
+Query example-2:
+
+```sh
+curl http://config-service/search?metadata.limits.cpu.enabled=true
+```
+
+Response example-2:
+
+```json
+[
+  {
+    "name": "datacenter-2",
+    "metadata": {
+      "monitoring": {
+        "enabled": true
+      }
+      "limits": {
+        "cpu": {
+          "enabled": true
+        }
+      }
+    }
+  }
+]
+```
+
 #### Schema
 
 - **Config**
   - Name (string)
-  - Data (key:value pairs)
+  - Metadata (key:value pairs)
 
 ### Configuration
 
