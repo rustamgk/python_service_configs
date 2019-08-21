@@ -59,7 +59,7 @@ Response example:
     "metadata": {
       "monitoring": {
         "enabled": true
-      }
+      },
       "limits": {
         "cpu": {
           "enabled": false
@@ -72,7 +72,7 @@ Response example:
     "metadata": {
       "monitoring": {
         "enabled": true
-      }
+      },
       "limits": {
         "cpu": {
           "enabled": true
@@ -99,7 +99,7 @@ Response example-2:
     "metadata": {
       "monitoring": {
         "enabled": true
-      }
+      },
       "limits": {
         "cpu": {
           "enabled": true
