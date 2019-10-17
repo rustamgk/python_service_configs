@@ -58,11 +58,12 @@ Response example:
     "name": "datacenter-1",
     "metadata": {
       "monitoring": {
-        "enabled": true
+        "enabled": "true"
       },
       "limits": {
         "cpu": {
-          "enabled": false
+          "enabled": "false",
+          "value": "300m"
         }
       }
     }
@@ -71,11 +72,12 @@ Response example:
     "name": "datacenter-2",
     "metadata": {
       "monitoring": {
-        "enabled": true
+        "enabled": "true"
       },
       "limits": {
         "cpu": {
-          "enabled": true
+          "enabled": "true",
+          "value": "250m"
         }
       }
     }
@@ -98,11 +100,12 @@ Response example-2:
     "name": "datacenter-2",
     "metadata": {
       "monitoring": {
-        "enabled": true
+        "enabled": "true"
       },
       "limits": {
         "cpu": {
-          "enabled": true
+          "enabled": "true",
+          "value": "250m"
         }
       }
     }
@@ -114,7 +117,7 @@ Response example-2:
 
 - **Config**
   - Name (string)
-  - Metadata (key:value pairs)
+  - Metadata (nested key:value pairs where both key and value are strings of arbitrary length)
 
 ### Configuration
 
