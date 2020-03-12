@@ -131,7 +131,7 @@ The application **MUST** be accessible from outside the minikube cluster.
 
 ## Rules
 
-- You can use any language / framework / SDK of your choice.
+- Applicants for Platform Engineer position are requested to submit their solution in GoLang. Applicants for DevOps roles are requested to use either Python or GoLang.
 - The API **MUST** return valid JSON and **MUST** follow the endpoints set out above.
 - You **SHOULD** write testable code and demonstrate unit testing it.
 - You can use any testing, mocking libraries provided that you state the reasoning and it's simple to install and run.
