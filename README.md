@@ -89,7 +89,7 @@ Response example:
 Query example-2:
 
 ```sh
-curl http://config-service/search?metadata.limits.cpu.enabled=true
+curl http://config-service/search?metadata.allergens.eggs=true
 ```
 
 Response example-2:
@@ -97,16 +97,21 @@ Response example-2:
 ```json
 [
   {
-    "name": "datacenter-2",
+    "name": "burger-nutrition",
     "metadata": {
-      "monitoring": {
-        "enabled": "true"
+      "calories": 230,
+      "fats": {
+        "saturated-fat": "0g",
+        "trans-fat": "1g"
       },
-      "limits": {
-        "cpu": {
-          "enabled": "true",
-          "value": "250m"
-        }
+      "carbohydrates": {
+          "dietary-fiber": "4g",
+          "sugars": "1g"
+      },
+      "allergens": {
+        "nuts": "false",
+        "seafood": "false",
+        "eggs": "true"
       }
     }
   }
