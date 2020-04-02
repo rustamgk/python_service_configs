@@ -1,0 +1,19 @@
+## .gitignore
+## https://git-scm.com/docs/gitignore
+
+service_data/
+.idea/
+venv/
+dist/
+build/
+.pip/
+.eggs/
+.tox/
+**/*.egg-info/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+*.mo
+
+/*.py
+!setup.py
