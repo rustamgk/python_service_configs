@@ -16,7 +16,7 @@ FLASK_APP = __name__.split('.')[0]
 
 def create_app():
     # type: () -> flask.Flask
-    app = flask.Flask(FLASK_APP, static_url_path='/assets', static_folder='assets')
+    app = flask.Flask(FLASK_APP)
     logger = create_logger(app)
 
     logger.info('Runtime: app=%s; flask=%s; debug=%s', FLASK_APP, flask.__version__, app.debug)
