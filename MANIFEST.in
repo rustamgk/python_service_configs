@@ -1,0 +1,11 @@
+## MANIFEST.in
+## https://packaging.python.org/tutorials/distributing-packages/#manifest-in
+
+global-exclude *
+include LICENSE
+include README.md
+include setup.py
+graft src
+
+global-exclude *.py[cod]
+global-exclude *.po
