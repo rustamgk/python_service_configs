@@ -25,9 +25,12 @@ class FaviconView(View):
 REGISTRY_ENTRY_SCHEMA = 'schemas/registry-entry-config.schema.json'
 
 
-class ConfigsAPI(MethodView):
+class BaseAPIView(MethodView):
     def _storage(self):
         return ConfigRegistry.get()
+
+
+class ConfigsAPI(BaseAPIView):
 
     def get(self, name):
         # type: (typing.Optional[str]) -> Response
@@ -86,6 +89,9 @@ class ConfigsAPI(MethodView):
     patch = put
 
 
-class SearchAPI(MethodView):
+class SearchAPI(BaseAPIView):
     def get(self):
-        return jsonify([])
+        results = self._storage().search(request.args)
+        if len(results):
+            return jsonify(results)
+        return make_response(jsonify(results), HTTPStatus.NOT_FOUND)

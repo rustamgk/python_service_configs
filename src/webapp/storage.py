@@ -4,6 +4,8 @@ import enum
 import hashlib
 import os
 
+from webapp.utils import is_entry_match
+
 from .log import logger
 
 __all__ = (
@@ -88,19 +90,25 @@ class FileStorage(object):
             logger.warning('%s', exc)
         return False
 
-    def list(self):
-        # type: () -> typing.List[typing.Dict]
-        configs = []
+    def _iter_entries(self):
+        # type: () -> typing.Generator[typing.Dict]
         try:
             for root, dirs, files in os.walk(self._path):
                 for fname in files:
                     try:
                         with open(os.path.realpath(os.path.join(os.path.curdir, root, fname))) as fp:
-                            configs.append(json.load(fp))
+                            yield json.load(fp)
                     except json.JSONDecodeError:
                         pass
-
+                    except FileNotFoundError:
+                        pass
         except FileNotFoundError as exc:
-            logger.warning(exc)
-            return []
-        return configs
+            pass
+
+    def list(self):
+        # type: () -> typing.List[typing.Dict]
+        return [entry for entry in self._iter_entries()]
+
+    def search(self, criteria):
+        # type: (typing.Dict) -> typing.List[typing.Dict]
+        return [entry for entry in self._iter_entries() if is_entry_match(entry, criteria)]
