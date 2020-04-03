@@ -27,8 +27,9 @@ def create_app():
 
     ## Config API Endpoint
     configs_view = ConfigsAPI.as_view('configs')
-    app.add_url_rule('/configs/', defaults={'name': None, }, view_func=configs_view, methods=['GET'])
-    app.add_url_rule('/configs/', view_func=configs_view, methods=['POST'])
+    app.add_url_rule('/configs', strict_slashes=False, defaults={'name': None}, view_func=configs_view,
+                     methods=['GET'])
+    app.add_url_rule('/configs', strict_slashes=False, view_func=configs_view, methods=['POST'])
     app.add_url_rule('/configs/<name>', view_func=configs_view, methods=['GET', 'PUT', 'PATCH', 'DELETE'])
 
     ## Search API Endpoint

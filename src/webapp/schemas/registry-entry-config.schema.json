@@ -1,0 +1,19 @@
+{
+  "$id": "registry-entry-config.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "name",
+    "metadata"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 80
+    },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}

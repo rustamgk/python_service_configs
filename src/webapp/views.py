@@ -1,9 +1,12 @@
+import os
 import typing
 
 from http import HTTPStatus
 from flask.logging import create_logger
 from flask.views import MethodView, View
-from flask import Response, make_response, jsonify, current_app
+from flask import Response, make_response, jsonify, current_app, request
+
+from .validator import validate_schema
 
 __all__ = (
     'FaviconView',
@@ -23,6 +26,14 @@ class ConfigsAPI(MethodView):
         # type: (typing.Optional[str]) -> Response
         current_app.logger.info('Name is: %s', name)
         return jsonify([])
+
+    @validate_schema('schemas/registry-entry-config.schema.json')
+    def post(self):
+        # type: () -> Response
+        # config = request.json
+        return make_response(jsonify({
+            'status': 'ok',
+        }), 200)
 
 
 class SearchAPI(MethodView):

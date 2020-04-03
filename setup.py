@@ -34,7 +34,7 @@ setup(
     install_requires=[
         'typing;python_version<"3.5"',
         'flask==1.1.1',
-        'requests',
+        'fastjsonschema',
     ],
     extras_require={
         'gunicorn': [
