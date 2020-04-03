@@ -13,7 +13,25 @@
       "maxLength": 80
     },
     "metadata": {
-      "type": "object"
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/metadataNode"
+      }
+    }
+  },
+  "definitions": {
+    "metadataNode": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/metadataNode"
+          }
+        }
+      ]
     }
   }
 }
