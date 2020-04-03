@@ -7,14 +7,13 @@ import functools
 from http import HTTPStatus
 import fastjsonschema
 from flask import Blueprint, current_app, request, jsonify, make_response
-from flask.logging import default_handler
+
+from .log import logger
 
 __all__ = (
     'get_schema_validator',
     'validate_schema',
 )
-logger = logging.getLogger()
-logger.addHandler(default_handler)
 
 _package_name = __name__.split('.', 1)[0]
 _resource_package_path = pkg_resources.get_distribution(_package_name).location
@@ -32,7 +31,6 @@ def get_schema_validator(filename, encoding='utf-8'):
     if filename not in _VALIDATOR_CACHE:
         try:
             fname = os.path.join(_resource_package_path, _package_name, filename)
-            print(fname)
             with open(fname, 'rt', encoding=encoding) as fp:
                 schema = json.load(fp)
             schema_validator = fastjsonschema.compile(schema)
