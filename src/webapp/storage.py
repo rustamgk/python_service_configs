@@ -102,7 +102,7 @@ class FileStorage(object):
                         pass
                     except FileNotFoundError:
                         pass
-        except FileNotFoundError as exc:
+        except FileNotFoundError:
             pass
 
     def list(self):
