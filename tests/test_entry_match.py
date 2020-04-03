@@ -32,6 +32,8 @@ class TestEntryMatch(unittest.TestCase):
 
         assert is_entry_match(entry, {'metadata.cpu.cores': '8', }) is True
         assert is_entry_match(entry, {'metadata.cpu.cores': '7', }) is False
+        assert is_entry_match(entry, {'metadata.cpu......cores': '8', }) is False
+        assert is_entry_match(entry, {'....metadata....cpu.sf.432.123123...cores': '8', }) is False
         assert is_entry_match(entry, {'wololo': '7', }) is False
         assert is_entry_match(entry, {
             'metadata.cpu.arch': 'x86',
