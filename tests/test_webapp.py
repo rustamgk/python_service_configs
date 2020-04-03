@@ -41,8 +41,8 @@ class TestWebapp(unittest.TestCase):
         # assert rv.status_code == HTTPStatus.FORBIDDEN, 'Expected HTTP status: 403 Forbidden'
 
     def test_configs_get(self):
-        assert url_for('configs') == '/configs', 'Expected configs endpoint URL: /configs'
-        rv = self.client.get('/configs')  # type: flask.wrappers.Response
+        assert url_for('configs') == '/configs/', 'Expected configs endpoint URL: /configs'
+        rv = self.client.get(url_for('configs'))  # type: flask.wrappers.Response
         assert rv.status_code == HTTPStatus.OK, 'Expected HTTP status: 200 OK'
         assert isinstance(rv.json, list), 'This endpoint should return list'
 
