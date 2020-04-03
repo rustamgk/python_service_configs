@@ -1,4 +1,5 @@
 ## config-registry.openapi.yml
+## $schema: https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v3.0/schema.json
 ---
 
 openapi: 3.0.0
@@ -37,6 +38,7 @@ paths:
       summary: adds config to registry
       description: adds config to registry
       requestBody:
+        description: Entry to add
         content:
           application/json:
             schema:
@@ -51,7 +53,6 @@ paths:
                     size: '2048'
                     units: 'MB'
                   is_active: 'true'
-        description: Inventory item to add
       responses:
         '201':
           description: item created
@@ -90,7 +91,7 @@ paths:
           type: string
 
     get:
-      summary: get config with name
+      summary: get config by name
       responses:
         '200':
           description: search results matching criteria
@@ -107,8 +108,9 @@ paths:
           description: entry not found
 
     put:
-      summary: update config
+      summary: update config by name
       requestBody:
+        description: Entry to update
         content:
           application/json:
             schema:
@@ -123,7 +125,6 @@ paths:
                   size: '2048'
                   units: 'MB'
                 is_active: 'true'
-        description: Inventory item to add
       responses:
         '200':
           description: search results matching criteria
