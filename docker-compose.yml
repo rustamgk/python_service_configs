@@ -1,0 +1,17 @@
+## docker-compose.yml
+## https://docs.docker.com/compose/compose-file/compose-file-v2/
+---
+version: "2"
+
+services:
+  config_registry:
+    build:
+      context: .
+    environment:
+      - SERVE_PORT=7070
+    #env_file:
+    #- service.env
+    ports:
+      - "127.0.0.1:7070:7070"
+#    volumes:
+#      - "./service_data/:/data/"

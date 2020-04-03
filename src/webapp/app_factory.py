@@ -1,5 +1,6 @@
 import typing
 import sys
+import logging
 
 import flask
 from flask import redirect, url_for
@@ -21,6 +22,13 @@ def create_app():
 
     logger.info('Runtime: app=%s; flask=%s; debug=%s', FLASK_APP, flask.__version__, app.debug)
     logger.info('Runtime: python=%s;', sys.version)
+
+    @app.before_first_request
+    def setup_logging():
+        if not app.debug:
+            # In production mode, add log handler to sys.stderr.
+            app.logger.addHandler(logging.StreamHandler())
+            app.logger.setLevel(logging.INFO)
 
     ## Dummy endpoint for favicon.ico
     app.add_url_rule('/favicon.ico', view_func=FaviconView.as_view('favicon'))
