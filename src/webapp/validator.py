@@ -60,9 +60,9 @@ def validate_schema(filename):
                     # logger.exception('JsonSchemaException: %s;', schema, exc_info=exc)
                     logger.debug('Payload: %s', request.data)
                 return make_response(jsonify({
-                    'status': 'bad request',
-                    'message': '%s' % exc,
-                    'schema': schema,
+                    'status': 'error',
+                    'message': str(exc),
+                    # 'schema': schema,
                 }), HTTPStatus.BAD_REQUEST)
             return func(*args, **kwargs)
 

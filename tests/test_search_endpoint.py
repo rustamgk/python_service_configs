@@ -52,7 +52,7 @@ class TestConfigRegistrySearchEndpoint(BaseTestCase):
         ]
         for payload in payloads:
             rv = self.client.post(url_for('configs'), json=payload)  # type: flask.wrappers.Response
-            assert rv.status_code == HTTPStatus.OK, 'Expected HTTP status: 200 OK'
+            assert rv.status_code == HTTPStatus.CREATED, 'Expected HTTP status: 201 Created'
 
         ## No criteria
         rv = self.client.get(url_for('search'))  # type: flask.wrappers.Response
