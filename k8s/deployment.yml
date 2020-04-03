@@ -1,0 +1,26 @@
+## deployment.yml
+---
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: config-registy-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-registry
+  template:
+    metadata:
+      labels:
+        app: config-registry
+    spec:
+      containers:
+        - name: config-registry
+          image: config-registry
+          imagePullPolicy: Never
+          env:
+            - name: SERVE_PORT
+              value: "7070"
+          ports:
+            - containerPort: 7070

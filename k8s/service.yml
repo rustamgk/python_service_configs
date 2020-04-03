@@ -1,0 +1,14 @@
+## service.yml
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: config-registry-service
+spec:
+  selector:
+    app: config-registry
+  ports:
+    - port: 7070
+      targetPort: 7070
+  type: LoadBalancer
