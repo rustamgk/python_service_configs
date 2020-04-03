@@ -10,4 +10,5 @@ echo "Starting service on 0.0.0.0:${SERVE_PORT}"
 exec gunicorn \
   --bind=0.0.0.0:${SERVE_PORT} \
   --workers=2 \
+  --log-level=info --capture-output \
   "webapp:create_app()"

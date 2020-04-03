@@ -4,7 +4,7 @@ import enum
 import hashlib
 import os
 
-from webapp.utils import is_entry_match
+from .utils import is_entry_match
 
 from .log import logger
 

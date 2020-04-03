@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
-set -eux
+set -eu
+set -x
 
 SERVICE_NAME=config-registry-service
 _path=$(dirname $(realpath "${0}"))

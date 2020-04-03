@@ -1,13 +1,12 @@
-import os
 import typing
 
 from http import HTTPStatus
-from flask.logging import create_logger
 from flask.views import MethodView, View
-from flask import Response, make_response, jsonify, current_app, request, url_for
+from flask import Response, make_response, jsonify, request, url_for
 
-from .validator import validate_schema
+from .validator import validate_schema, REGISTRY_ENTRY_SCHEMA
 from .storage import ConfigRegistry
+from .log import logger
 
 __all__ = (
     'FaviconView',
@@ -20,9 +19,6 @@ class FaviconView(View):
     def dispatch_request(self):
         # type: () -> Response
         return make_response('', HTTPStatus.NO_CONTENT)
-
-
-REGISTRY_ENTRY_SCHEMA = 'schemas/registry-entry-config.schema.json'
 
 
 class BaseAPIView(MethodView):
@@ -55,6 +51,7 @@ class ConfigsAPI(BaseAPIView):
         '''
         https://tools.ietf.org/html/rfc7231#section-4.3.3
         201 - Created
+        400 - Bad Request
         409 - Conflict
         500 - Internal Server Error
         '''
@@ -75,6 +72,7 @@ class ConfigsAPI(BaseAPIView):
             }), HTTPStatus.CREATED)  # type: Response
 
         else:
+            logger.warning('Unable to create entry; payload: %s', request.json)
             return make_response(jsonify({
                 'status': 'error',
                 'message': 'unable to create entry'
@@ -93,6 +91,7 @@ class ConfigsAPI(BaseAPIView):
                 'status': 'ok',
                 'message': 'deleted'
             }), HTTPStatus.OK)
+        logger.warning('Unable to delete entry; name=%s', name)
         return make_response(jsonify({
             'status': 'error',
             'message': 'unable to delete entry'
@@ -104,6 +103,7 @@ class ConfigsAPI(BaseAPIView):
         '''
         https://tools.ietf.org/html/rfc7231#section-4.3.4
         200 - Ok
+        400 - Bad request
         404 - Not Found
         500 - Internal Server Error
         '''
@@ -118,6 +118,7 @@ class ConfigsAPI(BaseAPIView):
         if is_stored:
             return jsonify({'status': 'ok'})
 
+        logger.warning('Unable to update entry; payload: %s', request.json)
         return make_response(jsonify({
             'status': 'fail',
             'message': 'unable to modify config',

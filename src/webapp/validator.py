@@ -1,19 +1,21 @@
 import typing
-import logging
 import json
 import os
 import pkg_resources
 import functools
 from http import HTTPStatus
 import fastjsonschema
-from flask import Blueprint, current_app, request, jsonify, make_response
+from flask import current_app, request, jsonify, make_response
 
 from .log import logger
 
 __all__ = (
     'get_schema_validator',
     'validate_schema',
+    'REGISTRY_ENTRY_SCHEMA',
 )
+
+REGISTRY_ENTRY_SCHEMA = 'schemas/registry-entry-config.schema.json'
 
 _package_name = __name__.split('.', 1)[0]
 _resource_package_path = pkg_resources.get_distribution(_package_name).location
@@ -44,7 +46,6 @@ def get_schema_validator(filename, encoding='utf-8'):
 def validate_schema(filename):
     # type: (str) -> typing.Any
     schema_validator = get_schema_validator(filename)
-    schema = os.path.basename(filename)
 
     def decorator(func):
         @functools.wraps(func)

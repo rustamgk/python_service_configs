@@ -3,7 +3,6 @@ import sys
 import logging
 
 import flask
-from flask import redirect, url_for
 from flask.logging import create_logger
 
 from .views import FaviconView, ConfigsAPI, SearchAPI
@@ -24,13 +23,13 @@ def create_app():
     logger.info('Runtime: python=%s;', sys.version)
 
     ## Configure logger for Gunicorn
-    if not __debug__:
-        @app.before_first_request
-        def setup_logging():
-            if not app.debug:
-                # In production mode, add log handler to sys.stderr.
-                app.logger.addHandler(logging.StreamHandler())
-                app.logger.setLevel(logging.INFO)
+    @app.before_first_request
+    def setup_logging():
+        if not app.debug and not __debug__:
+            # In production mode, add log handler to sys.stderr.
+            app.logger.addHandler(logging.StreamHandler())
+            app.logger.setLevel(logging.DEBUG)
+
 
     ## Dummy endpoint for favicon.ico
     app.add_url_rule('/favicon.ico', view_func=FaviconView.as_view('favicon'))
