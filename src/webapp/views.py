@@ -69,7 +69,7 @@ class ConfigsAPI(BaseAPIView):
             return make_response(jsonify({
                 'status': 'ok',
                 'message': 'created'
-            }), HTTPStatus.CREATED)  # type: Response
+            }), HTTPStatus.CREATED)
 
         else:
             logger.warning('Unable to create entry; payload: %s', request.json)
@@ -124,17 +124,22 @@ class ConfigsAPI(BaseAPIView):
             'message': 'unable to modify config',
         }), HTTPStatus.INTERNAL_SERVER_ERROR)
 
-    ## Same as PUT
+    # Same as PUT. This is alias
     patch = put
 
 
 class SearchAPI(BaseAPIView):
     def get(self):
         '''
+        Search API endpoint. Query string arguments used as search criteria. Multiple args supported.
+
+        ?metadata.foo.bar=qwerty&metadata.cpu.arch=x86
+
         200 - Ok
         404 - Not Found
         '''
         results = self._storage().search(request.args)
-        if len(results):
-            return jsonify(results)
-        return make_response(jsonify(results), HTTPStatus.NOT_FOUND)
+        return make_response(
+            jsonify(results),
+            HTTPStatus.OK if len(results) > 0 else HTTPStatus.NOT_FOUND
+        )

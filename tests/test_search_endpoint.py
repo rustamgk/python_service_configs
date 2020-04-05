@@ -1,3 +1,4 @@
+# pylint: disable=unused-import,no-self-use
 import typing
 import unittest
 from unittest import mock
@@ -11,17 +12,16 @@ import flask.testing
 from .common import BaseTestCase
 
 
-class TestConfigRegistrySearchEndpoint(BaseTestCase):
+class TestSearchEndpoint(BaseTestCase):
     """
-    TestConfigRegistrySearchEndpoint
+    TestSearchEndpoint
     """
 
     def test_search_endpoint(self):
-        assert url_for('search') == '/search', 'Expected search endpoint URL: /search'
         rv = self.client.get(url_for('search'))  # type: flask.wrappers.Response
-        assert rv.status_code == HTTPStatus.NOT_FOUND, 'Expected HTTP status 404 Not Found; Repository empty => no results'
-        assert isinstance(rv.json, list), 'This endpoint should return list'
-        assert len(rv.json) == 0, 'Should be exact 0 results ATM'
+        assert rv.status_code == HTTPStatus.NOT_FOUND, 'Repository empty => no results'
+        assert isinstance(rv.json, list)
+        assert len(rv.json) == 0
 
     def test_search_endpoint_misc_requests(self):
         payloads = [
@@ -52,32 +52,35 @@ class TestConfigRegistrySearchEndpoint(BaseTestCase):
         ]
         for payload in payloads:
             rv = self.client.post(url_for('configs'), json=payload)  # type: flask.wrappers.Response
-            assert rv.status_code == HTTPStatus.CREATED, 'Expected HTTP status: 201 Created'
+            assert rv.status_code == HTTPStatus.CREATED
 
-        ## No criteria
+        # No criteria
         rv = self.client.get(url_for('search'))  # type: flask.wrappers.Response
-        assert rv.status_code == HTTPStatus.OK, 'Expected HTTP status 200 Not Found; Search without criteria => any entry match'
-        assert isinstance(rv.json, list), 'This endpoint should return list'
-        assert len(rv.json) == 3, 'Should be exact 3 result ATM'
+        assert rv.status_code == HTTPStatus.OK, 'Search without criteria => any entry match'
+        assert isinstance(rv.json, list)
+        assert len(rv.json) == 3
 
-        ## Criteria: no match
-        rv = self.client.get(url_for('search', **{'metadata.qwerty': 'foobar'}))  # type: flask.wrappers.Response
-        assert rv.status_code == HTTPStatus.NOT_FOUND, 'Expected HTTP status 404 Not Found; No entry match that criteria'
-        assert isinstance(rv.json, list), 'This endpoint should return list'
-        assert len(rv.json) == 0, 'Should be exact 0 result ATM'
+        # Criteria: no match
+        url = url_for('search', **{'metadata.qwerty': 'foobar'})
+        rv = self.client.get(url)  # type: flask.wrappers.Response
+        assert rv.status_code == HTTPStatus.NOT_FOUND, 'No entry match that criteria'
+        assert isinstance(rv.json, list)
+        assert len(rv.json) == 0
 
-        ## Criteria: 1 match
-        rv = self.client.get(url_for('search', **{'metadata.foobar': 'deadbeef'}))  # type: flask.wrappers.Response
-        assert rv.status_code == HTTPStatus.OK, 'Expected HTTP status 200 OK; There is exact 1 entry'
-        assert isinstance(rv.json, list), 'This endpoint should return list'
-        assert len(rv.json) == 1, 'Should be exact 1 result ATM'
+        # Criteria: 1 match
+        url = url_for('search', **{'metadata.foobar': 'deadbeef'})
+        rv = self.client.get(url)  # type: flask.wrappers.Response
+        assert rv.status_code == HTTPStatus.OK, 'There is exact 1 entry'
+        assert isinstance(rv.json, list)
+        assert len(rv.json) == 1
         assert rv.json[0].get('metadata').get('foobar') == 'deadbeef'
 
-        ## Criteria: 2 match
-        rv = self.client.get(url_for('search', **{'metadata.type': 'cpu'}))  # type: flask.wrappers.Response
-        assert rv.status_code == HTTPStatus.OK, 'Expected HTTP status 200 OK; There is exact 2 entries'
-        assert isinstance(rv.json, list), 'This endpoint should return list'
-        assert len(rv.json) == 2, 'Should be exact 1 result ATM'
+        # Criteria: 2 match
+        url = url_for('search', **{'metadata.type': 'cpu'})
+        rv = self.client.get(url)  # type: flask.wrappers.Response
+        assert rv.status_code == HTTPStatus.OK, 'There is exact 2 entries'
+        assert isinstance(rv.json, list)
+        assert len(rv.json) == 2
         assert rv.json[0].get('metadata').get('type') == 'cpu'
 
 

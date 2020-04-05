@@ -1,3 +1,4 @@
+# pylint: disable=unused-import,no-self-use
 import typing
 import unittest
 import fastjsonschema
@@ -71,7 +72,7 @@ class TestJSONSchemaValidator(unittest.TestCase):
         ]
 
         for entry in invalid_entries:
-            with self.assertRaises(fastjsonschema.exceptions.JsonSchemaException):
+            with self.assertRaises(fastjsonschema.JsonSchemaException):
                 self.schema_validator(entry)
 
 

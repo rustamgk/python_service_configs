@@ -1,5 +1,5 @@
-import json
 import typing
+import json
 import enum
 import hashlib
 import os
@@ -17,13 +17,16 @@ __all__ = (
 
 class StorageType(enum.IntEnum):
     FileStorage = 1
+    MongoDBStorage = 2
 
 
 class ConfigRegistry(object):
     @classmethod
     def get(cls, storage=None):
         # type: (typing.Optional[StorageType]) -> FileStorage
-        if storage == StorageType.FileStorage:
+        if storage == StorageType.MongoDBStorage:
+            raise NotImplementedError('MongoDB not supported yet')
+        elif storage == StorageType.FileStorage:  # pylint: disable=no-else-raise
             pass
         return FileStorage(os.environ.get('STORAGE_PATH', '/data'))
 
@@ -50,8 +53,8 @@ class FileStorage(object):
 
     def get_entry_path(self, name):
         # type: (str) -> str
-        h = self._hash(name)
-        return os.path.join(self._path, h[0], h[1:3], h)
+        hash_ = self._hash(name)
+        return os.path.join(self._path, hash_[0], hash_[1:3], hash_)
 
     def store(self, config):
         # type: (typing.Dict) -> bool
@@ -93,10 +96,11 @@ class FileStorage(object):
     def _iter_entries(self):
         # type: () -> typing.Generator[typing.Dict]
         try:
-            for root, dirs, files in os.walk(self._path):
+            for root, _, files in os.walk(self._path):
                 for fname in files:
                     try:
-                        with open(os.path.realpath(os.path.join(os.path.curdir, root, fname))) as fp:
+                        fname = os.path.realpath(os.path.join(os.path.curdir, root, fname))
+                        with open(fname) as fp:
                             yield json.load(fp)
                     except json.JSONDecodeError:
                         pass

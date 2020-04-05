@@ -1,3 +1,4 @@
+# pylint: disable=unused-import,no-self-use
 import typing
 import unittest
 from unittest import mock
@@ -6,9 +7,9 @@ from webapp.utils import is_entry_match
 
 
 class TestEntryMatch(unittest.TestCase):
-    """
+    '''
     Test is_entry_match function actually works
-    """
+    '''
 
     def setUp(self):
         pass
@@ -44,29 +45,29 @@ class TestEntryMatch(unittest.TestCase):
     def test_examples1_pass(self):
         examples = [
             {
-                "name": "datacenter-1",
-                "metadata": {
-                    "monitoring": {
-                        "enabled": "true"
+                'name': 'datacenter-1',
+                'metadata': {
+                    'monitoring': {
+                        'enabled': 'true'
                     },
-                    "limits": {
-                        "cpu": {
-                            "enabled": "false",
-                            "value": "300m"
+                    'limits': {
+                        'cpu': {
+                            'enabled': 'false',
+                            'value': '300m'
                         }
                     }
                 }
             },
             {
-                "name": "datacenter-2",
-                "metadata": {
-                    "monitoring": {
-                        "enabled": "true"
+                'name': 'datacenter-2',
+                'metadata': {
+                    'monitoring': {
+                        'enabled': 'true'
                     },
-                    "limits": {
-                        "cpu": {
-                            "enabled": "true",
-                            "value": "250m"
+                    'limits': {
+                        'cpu': {
+                            'enabled': 'true',
+                            'value': '250m'
                         }
                     }
                 }
@@ -79,21 +80,21 @@ class TestEntryMatch(unittest.TestCase):
     def test_examples2_pass(self):
         examples = [
             {
-                "name": "burger-nutrition",
-                "metadata": {
-                    "calories": "230",
-                    "fats": {
-                        "saturated-fat": "0g",
-                        "trans-fat": "1g"
+                'name': 'burger-nutrition',
+                'metadata': {
+                    'calories': '230',
+                    'fats': {
+                        'saturated-fat': '0g',
+                        'trans-fat': '1g'
                     },
-                    "carbohydrates": {
-                        "dietary-fiber": "4g",
-                        "sugars": "1g"
+                    'carbohydrates': {
+                        'dietary-fiber': '4g',
+                        'sugars': '1g'
                     },
-                    "allergens": {
-                        "nuts": "false",
-                        "seafood": "false",
-                        "eggs": "true"
+                    'allergens': {
+                        'nuts': 'false',
+                        'seafood': 'false',
+                        'eggs': 'true'
                     }
                 }
             }
