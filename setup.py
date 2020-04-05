@@ -14,8 +14,8 @@ tests_requirements = [
     'pytest',
     'pytest-runner',
     'mock;python_version<="3.3"',
-    'requests-mock',
     'flake8',
+    'autopep8',
     'pylint',
 ]
 
