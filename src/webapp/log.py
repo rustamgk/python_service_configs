@@ -7,4 +7,3 @@ __all__ = (
 )
 
 logger = logging.getLogger()  # pylint: disable=invalid-name
-# logger.addHandler(default_handler)

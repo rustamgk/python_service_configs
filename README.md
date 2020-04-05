@@ -1,7 +1,5 @@
 # Config registry microservice
 
-[![unittests](https://github.com/avalak-work/microservice-flask-config-storage/workflows/unittests/badge.svg "Unittests")](https://github.com/avalak-work/microservice-flask-config-storage/actions?query=workflow%3Aunittests)
-
 ---
 
 Flask based config registry microservice with tests, docs adn docker/k8s (minikube) support.

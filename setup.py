@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 ## https://packaging.python.org/tutorials/packaging-projects/#creating-setup-py
+
 import typing
 import os
 
