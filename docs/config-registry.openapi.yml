@@ -1,0 +1,283 @@
+## config-registry.openapi.yml
+## $schema: https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v3.0/schema.json
+---
+
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+#servers:
+#  - description: SwaggerHub API Auto Mocking
+#    url: http://example.com/
+
+info:
+  description: This is config registry API definition
+  version: "1.0.0"
+  title: Config Registry API
+  contact:
+    email: user@example.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+
+tags:
+  - name: default
+    description: Common API methods
+
+paths:
+  /configs:
+    get:
+      summary: list configs
+      responses:
+        '200':
+          description: list config entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigEntriesList'
+
+    post:
+      summary: adds config to registry
+      description: adds config to registry
+      requestBody:
+        description: Entry to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigEntry'
+            example:
+              - name: 'qwerty-1'
+                metadata:
+                  cpu:
+                    arch: 'x86'
+                    cores: '8'
+                  memory:
+                    size: '2048'
+                    units: 'MB'
+                  is_active: 'true'
+      responses:
+        '201':
+          description: item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+              example:
+                status: ok
+                message: created
+        '400':
+          description: 'invalid input, object invalid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+              example:
+                status: error
+                message: 'some error message'
+        '409':
+          description: an existing item already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+              example:
+                status: error
+                message: unable to create entry
+
+  /configs/{name}:
+    parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+
+    get:
+      summary: get config by name
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigEntry'
+              example:
+                name: config-1
+                metadata:
+                  cpu:
+                    arch: x86
+        '404':
+          description: entry not found
+
+    put:
+      summary: update config by name
+      requestBody:
+        description: Entry to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigEntry'
+            example:
+              name: 'qwerty-1'
+              metadata:
+                cpu:
+                  arch: 'x86'
+                  cores: '8'
+                memory:
+                  size: '2048'
+                  units: 'MB'
+                is_active: 'true'
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+              example:
+                status: ok
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+              example:
+                status: error
+                message: 'some error message'
+        '404':
+          description: entry not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+              example:
+                status: error
+                message: 'entry not exists'
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+              example:
+                status: error
+                message: 'some error message'
+
+    delete:
+      summary: delete entry
+      responses:
+        '200':
+          description: deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+              example:
+                status: ok
+                message: 'deleted'
+        '500':
+          description: error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+              example:
+                status: error
+                message: 'unable to delete entry'
+
+  /search:
+    get:
+      summary: search
+      parameters:
+        - in: query
+          name: 'metadata'
+          style: form
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigEntriesList'
+        '404':
+          description: no results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConfigEntry'
+              example: []
+
+components:
+  schemas:
+    APIResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ['ok', 'error']
+        message:
+          type: string
+
+      example:
+        - status: ok
+        - status: error
+          message: bad request
+
+    ConfigEntriesList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ConfigEntry'
+      example:
+        - name: config-1
+          metadata:
+            cpu:
+              arch: x86
+              cores: '8'
+        - name: config-2
+          metadata:
+            cpu:
+              arch: x86
+              cores: '16'
+
+    ConfigEntry:
+      type: object
+      required:
+        - name
+        - metadata
+      properties:
+        name:
+          type: string
+          example: datacenter-1
+        metadata:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MetadataNode'
+      example:
+        name: 'qwerty-1'
+        metadata:
+          cpu:
+            arch: 'x86'
+            cores: '8'
+          memory:
+            size: '2048'
+            units: 'MB'
+          is_active: 'true'
+
+    MetadataNode:
+      anyOf:
+        - type: string
+        - type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MetadataNode'
+      example:
+        - foo: bar
+        - cpu:
+            arch: arm
+            cpuid:
+              sse1: 'true'
+              sse2: 'false'
