@@ -1,0 +1,19 @@
+## .pylintrc
+## http://pylint.pycqa.org/en/latest/user_guide/run.html
+
+[MASTER]
+enable =
+    redefined-builtin,
+disable =
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    empty-docstring,
+    duplicate-code,
+
+[BASIC]
+# Good variable names which should always be accepted, separated by a comma
+good-names = _,m,rv,fp
+
+[MESSAGE CONTROL]
+msg-template = "{path}:{line}:{column}:{C}:({symbol}){msg}"

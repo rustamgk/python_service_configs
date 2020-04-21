@@ -1,24 +1,24 @@
-# HelloFresh DevOps Test
+# Config registry microservice
 
-Hello and thanks for taking the time to try this out.
+TODO: add GitHub Actions badge 
 
-The goal of this test is to assert (to some degree) your coding, testing, automation and documentation skills. You're given a simple problem, so you can focus on showcasing your techniques.
+---
 
-## Problem definition
 
+<<<<<<< HEAD
 The aim of test is to create a simple HTTP service that stores and returns configutations that satisfy  certain conditions.
 Since we love automating things, the service should be automatically deployed to kubernetes.
+=======
+Flask based config registry microservice
+>>>>>>> 1765f6b... Initial project structure added
 
-_Note: While we love open source here at HelloFresh, please do not create a public repo with your test in! This challenge is only shared with people interviewing, and for obvious reasons we'd like it to remain this way._
+## Configuration
 
-## Instructions
+Application **MUST** serve the API on the port defined by the environment variable `SERVE_PORT`.
 
-1. Clone this repository.
-2. Create a new `dev` branch.
-3. Solve the task and commit your code. Commit often, we like to see small commits that build up to the end result of your test, instead of one final commit with all the code.
-4. Do a pull request from the `dev` branch to the `master` branch. More on that right below.
-5. Reply to the thread you are having with our HR department so we can start reviewing your code.
+## Links
 
+<<<<<<< HEAD
 When you're finished, please do a pull request to `master` and make sure to write about your approach in the description. One or more of our engineers will then perform a code review. We will ask questions which we expect you to be able to answer. Code review is an important part of our process; this gives you as well as us a better understanding of how working together might be like.
 
 We believe it will take 4 to 8 hours to develop this task, however, feel free to invest as much time as you want.
@@ -66,3 +66,10 @@ The application **MUST** be accesible from outside the minikube cluster on `PORT
 - You **SHOULD** write testable code and demonstrate unit testing it
 - You can use any testing, mocking libraries provided that you state the reasoning and it's simple to install and run.
 - You SHOULD document your code and scripts.
+=======
+ * [Flask][flask]
+ * [Gunicorn][gunicorn]
+ 
+[flask]: https://palletsprojects.com/p/flask/ "Flask | The Pallets Projects"
+[gunicorn]: https://gunicorn.org/ "Gunicorn - Python WSGI HTTP Server for UNIX"
+>>>>>>> 1765f6b... Initial project structure added

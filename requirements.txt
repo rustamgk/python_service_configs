@@ -1,0 +1,12 @@
+## requirements.txt
+## Usage:
+## python3 -m pip install -r requirements.txt
+
+## Install in production mode
+#.
+
+## Install Gunicorn
+.[gunicorn]
+
+## Install in development mode
+#-e .[tests]
