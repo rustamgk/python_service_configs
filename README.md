@@ -1,5 +1,4 @@
 # Config registry microservice
-
 ---
 
 Flask based config registry microservice with tests, docs adn docker/k8s (minikube) support.
