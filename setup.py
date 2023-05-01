@@ -34,7 +34,7 @@ setup(
     },
     install_requires=[
         'typing;python_version<"3.5"',
-        'flask==1.1.1',
+        'flask==2.3.2',
         'fastjsonschema',
     ],
     extras_require={
